@@ -2,8 +2,9 @@ generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
   moduleFormat = "cjs"
+  generatedFileExtension = "ts"
+  importFileExtension = "ts"
 }
-
 datasource db {
   provider = "postgresql"
 }
@@ -15,71 +16,93 @@ enum Role {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  name        String
-  email       String       @unique
-  password    String
-  role        Role         @default(STUDENT)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  courses     Course[]     @relation("InstructorCourses")
-  enrollments Enrollment[]
-  submissions Submission[]
-  progress    Progress[]
+  id                Int           @id @default(autoincrement())
+  name              String
+  email             String        @unique
+  password          String
+  role              Role          @default(STUDENT)
+
+  instructorCourses Course[]      @relation("InstructorCourses")
+  enrollments       Enrollment[]
+  progress          Progress[]
+  submissions       Submission[]
+
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 }
 
 model Course {
-  id          Int          @id @default(autoincrement())
-  title       String
-  description String?
-  instructorId Int
-  instructor  User         @relation("InstructorCourses", fields: [instructorId], references: [id])
-  lessons     Lesson[]
-  enrollments Enrollment[]
-  assignments Assignment[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            Int           @id @default(autoincrement())
+  title         String
+  description   String?
+  instructorId  Int
+  instructor    User          @relation("InstructorCourses", fields: [instructorId], references: [id], onDelete: Restrict)
+
+  lessons       Lesson[]
+  enrollments   Enrollment[]
+  assignments   Assignment[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Enrollment {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  courseId  Int
-  user      User     @relation(fields: [userId], references: [id])
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  courseId   Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
 
   @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
 }
 
 model Lesson {
-  id        Int      @id @default(autoincrement())
-  courseId  Int
-  title     String
-  content   String?
-  position  Int
-  course    Course   @relation(fields: [courseId], references: [id])
-  progress  Progress[]
+  id         Int       @id @default(autoincrement())
+  courseId   Int
+  title      String
+  content    String?
+  position   Int
+
+  course     Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress   Progress[]
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([courseId])
+  @@unique([courseId, position])
 }
 
 model Progress {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  lessonId    Int
-  completedAt DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id])
-  lesson      Lesson   @relation(fields: [lessonId], references: [id])
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  lessonId     Int
+  completedAt  DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson       Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
 }
 
 model Assignment {
-  id          Int      @id @default(autoincrement())
-  courseId    Int
-  title       String
-  dueDate     DateTime?
-  course      Course   @relation(fields: [courseId], references: [id])
-  submissions Submission[]
+  id           Int          @id @default(autoincrement())
+  courseId     Int
+  title        String
+  dueDate      DateTime?
+
+  course       Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  submissions  Submission[]
+
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([courseId])
 }
 
 model Submission {
@@ -89,8 +112,11 @@ model Submission {
   content      String?
   score        Int?
   submittedAt  DateTime   @default(now())
-  assignment   Assignment @relation(fields: [assignmentId], references: [id])
-  user         User       @relation(fields: [userId], references: [id])
+
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([assignmentId, userId])
+  @@index([assignmentId])
+  @@index([userId])
 }

@@ -8,11 +8,11 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/Course.js'
-export type * from './models/Enrollment.js'
-export type * from './models/Lesson.js'
-export type * from './models/Progress.js'
-export type * from './models/Assignment.js'
-export type * from './models/Submission.js'
-export type * from './commonInputTypes.js'
+export type * from './models/User.ts'
+export type * from './models/Course.ts'
+export type * from './models/Enrollment.ts'
+export type * from './models/Lesson.ts'
+export type * from './models/Progress.ts'
+export type * from './models/Assignment.ts'
+export type * from './models/Submission.ts'
+export type * from './commonInputTypes.ts'

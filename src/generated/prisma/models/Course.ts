@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Course
@@ -294,7 +294,7 @@ export type CourseCreateInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  instructor: Prisma.UserCreateNestedOneWithoutCoursesInput
+  instructor: Prisma.UserCreateNestedOneWithoutInstructorCoursesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutCourseInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutCourseInput
@@ -317,7 +317,7 @@ export type CourseUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  instructor?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
+  instructor?: Prisma.UserUpdateOneRequiredWithoutInstructorCoursesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutCourseNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutCourseNestedInput
@@ -564,7 +564,7 @@ export type CourseCreateWithoutEnrollmentsInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  instructor: Prisma.UserCreateNestedOneWithoutCoursesInput
+  instructor: Prisma.UserCreateNestedOneWithoutInstructorCoursesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutCourseInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutCourseInput
 }
@@ -601,7 +601,7 @@ export type CourseUpdateWithoutEnrollmentsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  instructor?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
+  instructor?: Prisma.UserUpdateOneRequiredWithoutInstructorCoursesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutCourseNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutCourseNestedInput
 }
@@ -622,7 +622,7 @@ export type CourseCreateWithoutLessonsInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  instructor: Prisma.UserCreateNestedOneWithoutCoursesInput
+  instructor: Prisma.UserCreateNestedOneWithoutInstructorCoursesInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput
   assignments?: Prisma.AssignmentCreateNestedManyWithoutCourseInput
 }
@@ -659,7 +659,7 @@ export type CourseUpdateWithoutLessonsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  instructor?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
+  instructor?: Prisma.UserUpdateOneRequiredWithoutInstructorCoursesNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput
   assignments?: Prisma.AssignmentUpdateManyWithoutCourseNestedInput
 }
@@ -680,7 +680,7 @@ export type CourseCreateWithoutAssignmentsInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  instructor: Prisma.UserCreateNestedOneWithoutCoursesInput
+  instructor: Prisma.UserCreateNestedOneWithoutInstructorCoursesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutCourseInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput
 }
@@ -717,7 +717,7 @@ export type CourseUpdateWithoutAssignmentsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  instructor?: Prisma.UserUpdateOneRequiredWithoutCoursesNestedInput
+  instructor?: Prisma.UserUpdateOneRequiredWithoutInstructorCoursesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutCourseNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput
 }
